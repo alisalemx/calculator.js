@@ -1,4 +1,40 @@
-console.log(operate(2, 4, "/"));
+const displayElem = document.getElementById("display");
+const equalElem = document.getElementById("equal");
+const digitElems = document.querySelectorAll(".digit");
+const operatorElems = document.querySelectorAll(".operator");
+let currentNum = "";
+let num1 = null;
+let result = null;
+let operator = "";
+
+
+digitElems.forEach(button => {
+  button.addEventListener("click", (e) => {
+    currentNum += e.target.textContent;
+    displayElem.textContent = currentNum;
+  });
+});
+
+operatorElems.forEach(button => {
+  button.addEventListener("click", (e) => {
+    if (currentNum != "") {
+      num1 = Number(currentNum);
+      currentNum = "";
+      displayElem.textContent = "";
+    }
+
+    operator = e.target.textContent;
+  });
+});
+
+equalElem.addEventListener("click", () => {
+  if (num1 != null && currentNum != "" && operator != "") {
+    result = operate(num1, Number(currentNum), operator);
+    displayElem.textContent = result;
+    num1 = result;
+    currentNum = "";
+  }
+});
 
 function operate(x, y, operator) {
   switch (operator) {
